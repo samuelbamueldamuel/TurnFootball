@@ -7,16 +7,34 @@ public class CheckDistance : MonoBehaviour
     public List<GameObject> tiles = new List<GameObject>();
     public float moveLimit = 5f;
     public Material newMaterial;
+    public Material defaultMaterial;
 
 
     public void populateList()
     {
+
         foreach (Transform child in turf.transform)
         {
+
             tiles.Add(child.gameObject);
+
+            
             // Debug.Log("Added to list: " + child.gameObject.name);
 
         }
+        Debug.Log("Total tiles in list: " + tiles.Count);
+    }
+    public void removeMoveableTag()
+    {
+        foreach (GameObject tile in tiles)
+        {
+            // Debug.Log("Resetting tile: " + tile.name);
+            MeshRenderer tileRenderer = tile.GetComponent<MeshRenderer>();
+            tile.GetComponent<MeshRenderer>().material = defaultMaterial;
+            tile.tag = "Tile";
+            
+        }
+        
     }
 
     public void CheckDistanceFromPlayer(GameObject player)
@@ -37,16 +55,18 @@ public class CheckDistance : MonoBehaviour
 
             if (distance <= moveLimit)
             {
-                Debug.Log($"Highlighting {tile.name} at {tilePos}");
+                // Debug.Log($"Highlighting {tile.name} at {tilePos}");
                 // Debug.Log(newMaterial.GetType());
                 // Debug.Log(newMaterial.name);
                 MeshRenderer tileRenderer = tile.GetComponent<MeshRenderer>();
                 tile.GetComponent<MeshRenderer>().material = newMaterial;
+                tile.tag = "MoveableTile";
             }
             // else
             // {
             //     // Debug.Log("Distance:  " + distance);
             // }
         }
+        
     }
 }

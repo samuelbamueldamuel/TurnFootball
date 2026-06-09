@@ -4,29 +4,41 @@ using System.Collections.Generic;
 
 public class PlayDesignManager : MonoBehaviour
 {
-    PlayerSelector playerSelector;
-    CheckDistance checkDistance;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public PlayerSelector playerSelector;
+    public CheckDistance checkDistance;
+    public MovePlayer movePlayer;
+    bool isPlayerSelected = false;
+    public GameObject selectedPlayer;
+
     void Start()
     {
-        
+
+        playerSelector = GetComponent<PlayerSelector>();
         checkDistance = GetComponent<CheckDistance>();
         checkDistance.populateList();
-
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !isPlayerSelected)
         {
-            playerSelector = GetComponent<PlayerSelector>();
-            GameObject selectedPlayer = playerSelector.ShootRay();
+            selectedPlayer = playerSelector.ShootRay();
             if (selectedPlayer != null)
             {
                 Debug.Log("Selected Player: " + selectedPlayer.name);
                 checkDistance.CheckDistanceFromPlayer(selectedPlayer);
+                
+                isPlayerSelected = true;
+                
             }
+        }
+        else if(Input.GetMouseButtonDown(0) && isPlayerSelected)
+        {
+            movePlayer = GetComponent<MovePlayer>();
+            movePlayer.ChooseTile(selectedPlayer);
+            checkDistance.removeMoveableTag();
+            isPlayerSelected = false;
         }
     }
 }

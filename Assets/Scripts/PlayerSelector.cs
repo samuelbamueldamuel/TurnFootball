@@ -16,7 +16,11 @@ public class PlayerSelector: MonoBehaviour
         {
             Debug.Log("Hit: " + hit.collider.gameObject.name);
             // Do something with the hit object
-            selected = hit.collider.transform.gameObject;
+            if(hit.collider.gameObject.CompareTag("TeamOne"))
+            {
+                selected = hit.collider.transform.gameObject;
+            }
+            
         }
         return selected;
     }
