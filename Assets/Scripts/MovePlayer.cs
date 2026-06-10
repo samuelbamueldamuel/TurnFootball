@@ -26,5 +26,6 @@ public class MovePlayer : MonoBehaviour
     {
         Vector3 targetPosition = new Vector3(tile.transform.position.x, player.transform.position.y, tile.transform.position.z);
         player.transform.position = targetPosition;
+        player.layer = LayerMask.NameToLayer("Moved");
     }
 }

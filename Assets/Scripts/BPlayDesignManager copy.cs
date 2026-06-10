@@ -2,13 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public class PlayDesignManager : MonoBehaviour
+public class BPlayDesignManager : MonoBehaviour
 {
     public PlayerSelector playerSelector;
     public CheckDistance checkDistance;
     public MovePlayer movePlayer;
     bool isPlayerSelected = false;
     public GameObject selectedPlayer;
+    public GameObject TeamBPlayers;
+    public GameManager gm;
+
+
 
     void Start()
     {
@@ -16,6 +20,7 @@ public class PlayDesignManager : MonoBehaviour
         playerSelector = GetComponent<PlayerSelector>();
         checkDistance = GetComponent<CheckDistance>();
         checkDistance.populateList();
+
         
     }
 
@@ -23,15 +28,23 @@ public class PlayDesignManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && !isPlayerSelected)
         {
-            selectedPlayer = playerSelector.ShootRay();
-            if (selectedPlayer != null)
+            selectedPlayer = playerSelector.ShootRay("TeamB");
+            if (selectedPlayer != null )
             {
-                Debug.Log("Selected Player: " + selectedPlayer.name);
-                checkDistance.CheckDistanceFromPlayer(selectedPlayer);
-                
-                isPlayerSelected = true;
+                if(selectedPlayer.layer == LayerMask.NameToLayer("Unmoved"))
+                {
+                    Debug.Log("Selected Player: " + selectedPlayer.name);
+                    checkDistance.CheckDistanceFromPlayer(selectedPlayer);
+                    
+                    isPlayerSelected = true;
+                }
+                else
+                {
+                    Debug.Log("Selected Player has already moved");
+                }
                 
             }
+            
         }
         else if(Input.GetMouseButtonDown(0) && isPlayerSelected)
         {

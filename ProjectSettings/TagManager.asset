@@ -7,14 +7,15 @@ TagManager:
   - TeamOne
   - MoveableTile
   - Tile
+  - TeamA
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Unmoved
   - Water
   - UI
-  - 
+  - Moved
   - 
   - 
   - 
