@@ -6,7 +6,7 @@ public class PlayerSelector: MonoBehaviour
     //raycast
     public Camera cam;
 
-    public GameObject ShootRay(string team)
+    public GameObject ShootRay(TeamUp team)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -14,9 +14,9 @@ public class PlayerSelector: MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
+            Debug.Log("Hit: " + hit.collider.gameObject.name + " on team: " + hit.collider.gameObject.tag);
             // Do something with the hit object
-            if(hit.collider.gameObject.CompareTag(team))
+            if(hit.collider.gameObject.CompareTag(team.ToString()))
             {
                 selected = hit.collider.transform.gameObject;
             }

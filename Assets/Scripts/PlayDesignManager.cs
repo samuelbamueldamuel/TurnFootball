@@ -2,17 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public class BPlayDesignManager : MonoBehaviour
+public class PlayDesignManager : MonoBehaviour
 {
     public PlayerSelector playerSelector;
     public CheckDistance checkDistance;
     public MovePlayer movePlayer;
-    bool isPlayerSelected = false;
+    public bool isPlayerSelected = false;
     public GameObject selectedPlayer;
+    public GameObject TeamAPlayers;
     public GameObject TeamBPlayers;
     public GameManager gm;
-
-
+    
 
     void Start()
     {
@@ -26,9 +26,12 @@ public class BPlayDesignManager : MonoBehaviour
 
     void Update()
     {
+
         if(Input.GetMouseButtonDown(0) && !isPlayerSelected)
         {
-            selectedPlayer = playerSelector.ShootRay("TeamB");
+            // Debug.Log("pew pew");
+            selectedPlayer = playerSelector.ShootRay(GameManager.currentTeam);
+
             if (selectedPlayer != null )
             {
                 if(selectedPlayer.layer == LayerMask.NameToLayer("Unmoved"))
@@ -53,5 +56,26 @@ public class BPlayDesignManager : MonoBehaviour
             checkDistance.removeMoveableTag();
             isPlayerSelected = false;
         }
+        
+    }
+
+    public void resetLayers(TeamUp team)
+    {
+        Debug.Log("Resetting layers for " + team.ToString());
+        if (team == TeamUp.TeamA)
+        {
+            foreach (Transform player in TeamAPlayers.transform)
+            {
+                player.gameObject.layer = LayerMask.NameToLayer("Unmoved");
+            }
+        }
+        else if (team == TeamUp.TeamB)
+        {
+            foreach (Transform player in TeamBPlayers.transform)
+            {
+                player.gameObject.layer = LayerMask.NameToLayer("Unmoved");
+            }
+        }
     }
 }
+
