@@ -40,6 +40,10 @@ public class PlayDesignManager : MonoBehaviour
                     checkDistance.CheckDistanceFromPlayer(selectedPlayer);
                     
                     isPlayerSelected = true;
+                    
+                    //to later be put in its own function selectVisuals()
+                    //since selected is just a gameobject that makes this a little easier
+                    //selectedPlayer//instead of this, make a call to a visuals part, which will have a reference to the ghost and spawn it at the currently looked at tile
                 }
                 else
                 {
