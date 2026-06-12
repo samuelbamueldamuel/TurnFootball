@@ -10,7 +10,7 @@ public class CheckDistance : MonoBehaviour
     public Material defaultMaterial;
 
 
-    public void populateList()
+    public void populateList() //adds all tiles on turf to list so easy to iterate over
     {
 
         foreach (Transform child in turf.transform)
@@ -24,14 +24,14 @@ public class CheckDistance : MonoBehaviour
         }
         Debug.Log("Total tiles in list: " + tiles.Count);
     }
-    public void removeMoveableTag()
+    public void removeMoveableTag() //makes tiles that were in distance unmoveable again
     {
         foreach (GameObject tile in tiles)
         {
             // Debug.Log("Resetting tile: " + tile.name);
             MeshRenderer tileRenderer = tile.GetComponent<MeshRenderer>();
-            tile.GetComponent<MeshRenderer>().material = defaultMaterial;
-            tile.tag = "Tile";
+            tile.GetComponent<MeshRenderer>().material = defaultMaterial; //resets material to default
+            tile.tag = "Tile"; //makes them unmoveable
             
         }
         
@@ -40,16 +40,16 @@ public class CheckDistance : MonoBehaviour
     public void CheckDistanceFromPlayer(GameObject player)
     {
         Debug.Log("Checking distance from player: " + player.name);
-        foreach (GameObject tile in tiles)
+        foreach (GameObject tile in tiles) //iterates over all tiles to check distance
         {
             float playerX = player.transform.position.x;
             float playerZ = player.transform.position.z;
             float tileX = tile.transform.position.x;
             float tileZ = tile.transform.position.z;
 
-            Vector2Int playerPos = new Vector2Int(Mathf.RoundToInt(playerX), Mathf.RoundToInt(playerZ));
+            Vector2Int playerPos = new Vector2Int(Mathf.RoundToInt(playerX), Mathf.RoundToInt(playerZ)); 
             Vector2Int tilePos = new Vector2Int(Mathf.RoundToInt(tileX), Mathf.RoundToInt(tileZ));
-            int distance =
+            int distance = //mahattan distance calculation, used because movement is only up/down/left/right
                 Mathf.Abs(playerPos.x - tilePos.x) +
                 Mathf.Abs(playerPos.y - tilePos.y);
 
@@ -59,8 +59,8 @@ public class CheckDistance : MonoBehaviour
                 // Debug.Log(newMaterial.GetType());
                 // Debug.Log(newMaterial.name);
                 MeshRenderer tileRenderer = tile.GetComponent<MeshRenderer>();
-                tile.GetComponent<MeshRenderer>().material = newMaterial;
-                tile.tag = "MoveableTile";
+                tile.GetComponent<MeshRenderer>().material = newMaterial; //changes material to show moveable tiles
+                tile.tag = "MoveableTile"; //makes them moveable so they can be selected in moving phase
             }
             // else
             // {

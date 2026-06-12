@@ -6,7 +6,7 @@ public class PlayerSelector: MonoBehaviour
     //raycast
     public Camera cam;
 
-    public GameObject ShootRay(TeamUp team)
+    public GameObject ShootRay(TeamUp team) //shoots rays and checks if object is on current team, called by pdm and returns the player hit
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum TeamUp
+public enum TeamUp //enum used to specify what team is up
 {
     TeamA,
     TeamB
@@ -15,7 +15,7 @@ public class GameManager: MonoBehaviour
 
     void Update()
     {
-        if (currentTurn > turnLimit)
+        if (currentTurn > turnLimit) //changes teams after 3 moves
         {
             if(currentTeam == TeamUp.TeamA)
             {
