@@ -19,7 +19,7 @@ public class PlayDesignManager : MonoBehaviour
 
         playerSelector = GetComponent<PlayerSelector>();
         checkDistance = GetComponent<CheckDistance>();
-        checkDistance.populateList();
+        checkDistance.populateList(); // makes a list of all tiles on turf
 
         
     }
@@ -27,17 +27,17 @@ public class PlayDesignManager : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetMouseButtonDown(0) && !isPlayerSelected)
+        if(Input.GetMouseButtonDown(0) && !isPlayerSelected) //player selection phase
         {
             // Debug.Log("pew pew");
-            selectedPlayer = playerSelector.ShootRay(GameManager.currentTeam);
+            selectedPlayer = playerSelector.ShootRay(GameManager.currentTeam); //shoots ray to select player, checks if player on current team, attaches to selectedPlayer
 
             if (selectedPlayer != null )
             {
-                if(selectedPlayer.layer == LayerMask.NameToLayer("Unmoved"))
+                if(selectedPlayer.layer == LayerMask.NameToLayer("Unmoved")) //layers are Moved or Unmoved, change and check to keep 1 player moving per turn
                 {
                     Debug.Log("Selected Player: " + selectedPlayer.name);
-                    checkDistance.CheckDistanceFromPlayer(selectedPlayer);
+                    checkDistance.CheckDistanceFromPlayer(selectedPlayer); // changes tiles in moving range to read
                     
                     isPlayerSelected = true;
                     
@@ -56,14 +56,14 @@ public class PlayDesignManager : MonoBehaviour
         else if(Input.GetMouseButtonDown(0) && isPlayerSelected)
         {
             movePlayer = GetComponent<MovePlayer>();
-            movePlayer.ChooseTile(selectedPlayer);
+            movePlayer.ChooseTile(selectedPlayer); // shoots ray to select tiles, checks if in distance then moves player to tile
             checkDistance.removeMoveableTag();
-            isPlayerSelected = false;
+            isPlayerSelected = false; //triggers player selection phase
         }
         
     }
 
-    public void resetLayers(TeamUp team)
+    public void resetLayers(TeamUp team) // resets layers of players so they can be moved again
     {
         Debug.Log("Resetting layers for " + team.ToString());
         if (team == TeamUp.TeamA)
