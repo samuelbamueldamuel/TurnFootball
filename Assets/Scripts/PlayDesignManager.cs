@@ -13,6 +13,7 @@ public class PlayDesignManager : MonoBehaviour
     public GameObject TeamBPlayers;
     public GameManager gm;
     public PosBank posBank;
+    private VisualManager visualManager;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class PlayDesignManager : MonoBehaviour
         posBank.savePositions(TeamBPlayers);
         playerSelector = GetComponent<PlayerSelector>();
         checkDistance = GetComponent<CheckDistance>();
+        visualManager = GetComponent<VisualManager>();
         checkDistance.populateList(); // makes a list of all tiles on turf
 
         
@@ -42,9 +44,7 @@ public class PlayDesignManager : MonoBehaviour
                     
                     isPlayerSelected = true;
                     
-                    //to later be put in its own function selectVisuals()
-                    //since selected is just a gameobject that makes this a little easier
-                    //selectedPlayer//instead of this, make a call to a visuals part, which will have a reference to the ghost and spawn it at the currently looked at tile
+                    visualManager.SetPreSelect(true); //activate the ghost model preview
                 }
                 else
                 {
@@ -59,6 +59,7 @@ public class PlayDesignManager : MonoBehaviour
             movePlayer = GetComponent<MovePlayer>();
             movePlayer.ChooseTile(selectedPlayer); // shoots ray to select tiles, checks if in distance then moves player to tile
             checkDistance.removeMoveableTag();
+            visualManager.SetPreSelect(false);
             isPlayerSelected = false; //triggers player selection phase
         }
         
