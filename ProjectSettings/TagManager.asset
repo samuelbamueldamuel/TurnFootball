@@ -8,6 +8,7 @@ TagManager:
   - MoveableTile
   - Tile
   - TeamA
+  - TeamB
   layers:
   - Default
   - TransparentFX

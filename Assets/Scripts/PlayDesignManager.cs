@@ -12,11 +12,12 @@ public class PlayDesignManager : MonoBehaviour
     public GameObject TeamAPlayers;
     public GameObject TeamBPlayers;
     public GameManager gm;
-    
+    public PosBank posBank;
 
     void Start()
     {
-
+        posBank.savePositions(TeamAPlayers);
+        posBank.savePositions(TeamBPlayers);
         playerSelector = GetComponent<PlayerSelector>();
         checkDistance = GetComponent<CheckDistance>();
         checkDistance.populateList(); // makes a list of all tiles on turf
