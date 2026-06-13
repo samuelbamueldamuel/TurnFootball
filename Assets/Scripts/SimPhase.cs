@@ -1,0 +1,42 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+
+public class SimPhase : MonoBehaviour
+{
+    public PlayDesignManager PlayDesignManager;
+    public GameManager GameManager;
+    
+
+    public void MovePlayersToSimPositions(int index)
+    {
+        StartCoroutine(MovePlayersCoroutine(index));
+    }
+
+    IEnumerator MovePlayersCoroutine(int index)
+    {
+        Debug.Log("Sim Phase Begun");
+        for (int i = 0; i < PlayDesignManager.TeamAPlayers.transform.childCount; i++)
+        {
+            PlayDesignManager.TeamAPlayers.transform.GetChild(i).position = PosBank.turnPositionsA[index][i].Item2;
+        }
+        for (int i = 0; i < PlayDesignManager.TeamBPlayers.transform.childCount; i++)
+        {
+            PlayDesignManager.TeamBPlayers.transform.GetChild(i).position = PosBank.turnPositionsB[index][i].Item2;
+        }
+        
+        yield return new WaitForSeconds(2f); // Wait 2 seconds
+        
+        if(index < GameManager.turnLimit)
+        {
+            MovePlayersToSimPositions(index + 1);
+        }
+        else
+        {
+            Debug.Log("Sim Phase Ended");
+            GameManager.currentTeam = TeamUp.TeamA; //resets to team A for next play
+
+        }
+    }
+}
