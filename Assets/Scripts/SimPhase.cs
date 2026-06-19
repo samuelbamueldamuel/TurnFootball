@@ -7,6 +7,7 @@ public class SimPhase : MonoBehaviour
 {
     public PlayDesignManager PlayDesignManager;
     public GameManager GameManager;
+    public static float moveDuration = 1f; //time in bewtween moves
     
 
     public void MovePlayersToSimPositions(int index)
@@ -26,7 +27,7 @@ public class SimPhase : MonoBehaviour
             PlayDesignManager.TeamBPlayers.transform.GetChild(i).position = PosBank.turnPositionsB[index][i].Item2;
         }
         
-        yield return new WaitForSeconds(2f); // Wait 2 seconds
+        yield return new WaitForSeconds(moveDuration); // Wait 2 seconds
         
         if(index < GameManager.turnLimit)
         {
@@ -36,6 +37,8 @@ public class SimPhase : MonoBehaviour
         {
             Debug.Log("Sim Phase Ended");
             GameManager.currentTeam = TeamUp.TeamA; //resets to team A for next play
+            GameManager.simPhaseStarted = false; //resets sim phase for next play
+            GameManager.swapped = false; //resets swapped for next play
 
         }
     }
