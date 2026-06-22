@@ -14,7 +14,7 @@ public class GameManager: MonoBehaviour
     public static int turnLimit = 3;
     public static int currentTurn = 1;
     public bool swapped = false; //used to know when both teams
-    public bool simPhaseStarted = false; //used to make sure sim phase only starts once
+    public static bool simPhaseStarted = false; //used to make sure sim phase only starts once
 
 
     void Update()
