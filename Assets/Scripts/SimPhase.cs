@@ -18,20 +18,20 @@ public class SimPhase : MonoBehaviour
     IEnumerator MovePlayersCoroutine(int index)
     {
         Debug.Log("Sim Phase Begun");
-        for (int i = 0; i < PlayDesignManager.TeamAPlayers.transform.childCount; i++)
+        for (int i = 0; i < PlayDesignManager.TeamAPlayers.transform.childCount; i++) //iterate through each player
         {
-            PlayDesignManager.TeamAPlayers.transform.GetChild(i).position = PosBank.turnPositionsA[index][i].Item2;
+            PlayDesignManager.TeamAPlayers.transform.GetChild(i).position = PosBank.turnPositionsA[index][i].Item2; //moves player
         }
         for (int i = 0; i < PlayDesignManager.TeamBPlayers.transform.childCount; i++)
         {
-            PlayDesignManager.TeamBPlayers.transform.GetChild(i).position = PosBank.turnPositionsB[index][i].Item2;
+            PlayDesignManager.TeamBPlayers.transform.GetChild(i).position = PosBank.turnPositionsB[index][i].Item2; //moves player
         }
         
         yield return new WaitForSeconds(moveDuration); // Wait 2 seconds
         
         if(index < GameManager.turnLimit)
         {
-            MovePlayersToSimPositions(index + 1);
+            MovePlayersToSimPositions(index + 1);//recursively calls itself until it has moved players for each turn
         }
         else
         {
